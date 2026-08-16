@@ -1,1 +1,75 @@
+---
+---
 
+<section class="video-section">
+  <div class="video-container">
+    <p class="eyebrow">PRESENTACIÓN</p>
+
+    <h2>Conoce un poco sobre mí</h2>
+
+    <p class="description">
+      En este video te cuento un poco sobre mí, mis intereses y lo que espero
+      aprender durante este semestre en Bases de Datos 2.
+    </p>
+
+    <div class="video-wrapper">
+      <video controls preload="metadata">
+        <source src="/video-presentacion.mp4" type="video/mp4" />
+        Tu navegador no soporta la reproducción de videos.
+      </video>
+    </div>
+  </div>
+</section>
+
+<style>
+  .video-section {
+    padding: 80px 20px;
+  }
+
+  .video-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 2.2rem;
+    margin: 0 0 15px;
+  }
+
+  .description {
+    max-width: 650px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+    opacity: 0.8;
+  }
+
+  .video-wrapper {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+
+  video {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 600px) {
+    .video-section {
+      padding: 50px 15px;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+    }
+  }
+</style>

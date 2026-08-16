@@ -14,7 +14,7 @@ export const site = {
       'Bienvenido a mi e-portafolio académico. En este espacio compartiré mi proceso de aprendizaje durante Bases de Datos 2.',
     contact:
       'Universidad El Bosque · Bases de Datos 2',
-    avatarSrc: `${import.meta.env.BASE_URL}foto-dylan.jpg`,
+    avatarSrc: '/Dylan.github.io/foto-dylan.jpg',
     avatarAlt: 'Foto de Dylan',
   },
 

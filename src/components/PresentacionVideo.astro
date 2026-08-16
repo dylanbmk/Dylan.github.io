@@ -1,8 +1,6 @@
----
----
-
 <section class="video-section">
   <div class="video-container">
+
     <p class="eyebrow">PRESENTACIÓN</p>
 
     <h2>Conoce un poco sobre mí</h2>
@@ -12,68 +10,96 @@
       aprender durante este semestre en Bases de Datos 2.
     </p>
 
-    <div class="video-wrapper">
-      <video controls preload="metadata">
-        <source
-          src={`${import.meta.env.BASE_URL}video-presentacion.mp4`}
-          type="video/mp4"
-        />
-        Tu navegador no soporta la reproducción de videos.
-      </video>
-    </div>
+    <a
+      href="https://youtube.com/shorts/MOnU2MRJGv0?feature=share"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="youtube-button"
+    >
+      <span class="youtube-icon">▶</span>
+      Ver mi video de presentación
+    </a>
+
   </div>
 </section>
 
 <style>
   .video-section {
+    width: 100%;
     padding: 80px 20px;
-  }
-
-  .video-container {
-    max-width: 900px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
     text-align: center;
   }
 
+  .video-container {
+    width: 100%;
+    max-width: 900px;
+  }
+
   .eyebrow {
-    font-size: 0.85rem;
+    margin-bottom: 18px;
+    font-size: 14px;
     font-weight: 700;
-    letter-spacing: 0.15em;
-    margin-bottom: 10px;
+    letter-spacing: 2px;
+    color: #ffffff;
   }
 
   h2 {
-    font-size: 2.2rem;
-    margin: 0 0 15px;
+    margin: 0;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 500;
+    color: #ffffff;
   }
 
   .description {
-    max-width: 650px;
-    margin: 0 auto 30px;
-    line-height: 1.6;
-    opacity: 0.8;
+    max-width: 700px;
+    margin: 25px auto 0;
+    font-size: 17px;
+    line-height: 1.7;
+    color: #bdbdbd;
   }
 
-  .video-wrapper {
-    width: 100%;
-    overflow: hidden;
-    border-radius: 16px;
+  .youtube-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 35px;
+    padding: 15px 26px;
+    border-radius: 10px;
+    background: #ff0000;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: transform 0.25s ease, opacity 0.25s ease;
   }
 
-  video {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 16px;
+  .youtube-button:hover {
+    transform: translateY(-3px);
+    opacity: 0.85;
+  }
+
+  .youtube-icon {
+    font-size: 17px;
   }
 
   @media (max-width: 600px) {
     .video-section {
-      padding: 50px 15px;
+      padding: 60px 20px;
     }
 
     h2 {
-      font-size: 1.7rem;
+      font-size: 34px;
+    }
+
+    .description {
+      font-size: 15px;
+    }
+
+    .youtube-button {
+      width: 100%;
+      justify-content: center;
     }
   }
 </style>

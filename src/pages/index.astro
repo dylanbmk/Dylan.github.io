@@ -1,94 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import SiteIntro from '../components/SiteIntro.astro';
-import PresentationVideo from '../components/PresentationVideo.astro';
+import About from '../components/About.astro';
 import Footer from '../components/Footer.astro';
+import FeaturedProjects from '../components/FeaturedProjects.astro';
+import Experience from '../components/Experience.astro';
 import { site } from '../../data/site';
+
+const projects = site.featuredProjects;
 ---
 
 <Layout title={site.meta.title} description={site.meta.description}>
-  <section id="about" class="space-y-12">
-    <SiteIntro variant="mobile" />
-
-    <div class="mt-8">
-      <h2 class="section-heading">Sobre mí</h2>
-
-      <div class="body-copy max-w-prose space-y-5 text-lg">
-        <p>
-          Hola, soy Dylan, estudiante de Ingeniería de Sistemas en la
-          Universidad El Bosque.
-        </p>
-
-        <p>
-          Me interesa la tecnología, el desarrollo de software y seguir
-          aprendiendo nuevas herramientas que puedan ayudarme en mi formación
-          profesional.
-        </p>
-
-        <div class="panel-card">
-          <h3 class="mb-4 text-xl font-bold text-maintext">Sobre mí</h3>
-
-          <ul class="list-disc space-y-2 pl-5">
-            <li>Estudiante de Ingeniería de Sistemas</li>
-            <li>Interesado en tecnología y desarrollo de software</li>
-            <li>En constante aprendizaje de nuevas herramientas y tecnologías</li>
-          </ul>
-        </div>
-
-        <div class="panel-card">
-          <h3 class="mb-4 text-xl font-bold text-maintext">
-            Bases de Datos 2
-          </h3>
-
-          <ul class="list-disc space-y-2 pl-5">
-            <li>Aprender a trabajar de manera más avanzada con bases de datos</li>
-            <li>Fortalecer mis conocimientos en SQL y otras tecnologías</li>
-            <li>Aplicar lo aprendido en proyectos de Ingeniería de Sistemas</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <PresentationVideo />
-
-  <section id="evidencias" class="mt-20">
-    <h2 class="section-heading">Evidencias</h2>
-
-    <p class="body-copy mb-8 max-w-prose">
-      En esta sección se irán agregando las evidencias del semestre.
-    </p>
-
-    <div class="grid gap-5 sm:grid-cols-2">
-      <article class="panel-card">
-        <h3 class="text-xl font-bold text-maintext">SQL</h3>
-        <p class="body-copy mt-3">
-          Consultas y actividades realizadas durante el semestre.
-        </p>
-      </article>
-
-      <article class="panel-card">
-        <h3 class="text-xl font-bold text-maintext">PL/SQL Scripts</h3>
-        <p class="body-copy mt-3">
-          Scripts y ejercicios desarrollados en PL/SQL.
-        </p>
-      </article>
-
-      <article class="panel-card">
-        <h3 class="text-xl font-bold text-maintext">NoSQL</h3>
-        <p class="body-copy mt-3">
-          Actividades relacionadas con bases de datos NoSQL.
-        </p>
-      </article>
-
-      <article class="panel-card">
-        <h3 class="text-xl font-bold text-maintext">Proyecto</h3>
-        <p class="body-copy mt-3">
-          Avances y evidencias del proyecto de Bases de Datos 2.
-        </p>
-      </article>
-    </div>
-  </section>
-
+  <About />
+  <Experience />
+  <FeaturedProjects projects={projects} />
   <Footer />
 </Layout>

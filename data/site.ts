@@ -1,143 +1,89 @@
-/**
- * ============================================
- * PAGE CONTENT DATA
- * ============================================
- * All structured content for pages lives here.
- * Edit these arrays/objects to customize the template content.
- *
- * Replace placeholder images in src/assets/ with your own.
- */
-
 export const site = {
-  url: 'https://example.com',
+  url: 'https://dylanbmk.github.io',
+
   meta: {
-    title: 'Alex Morgan | Full-stack engineer',
+    title: 'Dylan | E-Portafolio - Bases de Datos 2',
     description:
-      'Portfolio example: shipping reliable web products with clear architecture, tests, and delivery practices.',
+      'E-portafolio académico de Dylan, estudiante de Ingeniería de Sistemas en la Universidad El Bosque.',
   },
+
   hero: {
-    name: 'Alex Morgan',
-    role: 'Full-stack engineer',
-    tagline: 'From product intent to production — pragmatic systems, accessible UI, and maintainable code.',
-    contact: 'Open to collaborations and senior IC roles on product-minded teams.',
-    avatarSrc: '/favicon.svg',
-    avatarAlt: 'Alex Morgan',
+    name: 'Dylan',
+    role: 'Estudiante de Ingeniería de Sistemas',
+    tagline:
+      'Bienvenido a mi e-portafolio académico. En este espacio compartiré mi proceso de aprendizaje durante Bases de Datos 2.',
+    contact:
+      'Universidad El Bosque · Bases de Datos 2',
+    avatarSrc: '/foto-dylan.jpg',
+    avatarAlt: 'Foto de Dylan',
   },
+
   about: {
     paragraphs: [
-      'A brief, compelling introduction about who you are and what you do. Mention your core philosophy, your passion for building digital products, and your drive for creating efficient, high-impact solutions.',
-      'I care about clear boundaries between modules, automated checks in CI, and documentation that helps the next contributor ship safely.',
+      'Hola, soy Dylan, estudiante de Ingeniería de Sistemas en la Universidad El Bosque.',
+      'Me interesa la tecnología, el desarrollo de software y seguir aprendiendo nuevas herramientas que puedan ayudarme en mi formación profesional.',
       {
-        heading: 'Example focus areas',
+        heading: 'Sobre mí',
         bullets: [
-          'Designing APIs and client boundaries with typed contracts',
-          'Performance budgets, caching, and pragmatic observability',
-          'Shipping incrementally with feature flags and rollback-friendly deploys',
+          'Estudiante de Ingeniería de Sistemas',
+          'Interesado en tecnología y desarrollo de software',
+          'En constante aprendizaje de nuevas herramientas y tecnologías',
         ],
       },
       {
-        heading: 'Sample stack',
-        techItems: ['TypeScript', 'Astro', 'Tailwind CSS', 'Node', 'Vitest'],
+        heading: 'Bases de Datos 2',
+        bullets: [
+          'Aprender a trabajar de manera más avanzada con bases de datos',
+          'Fortalecer mis conocimientos en SQL y otras tecnologías',
+          'Aplicar lo aprendido en proyectos de Ingeniería de Sistemas',
+        ],
       },
     ],
   },
-  experiences: [
-    {
-      period: '2025',
-      title: 'Lead Product Designer',
-      company: 'Lumen Studio',
-      summary:
-        'Built a polished portfolio experience with accessible UI, motion-led interactions, and reusable components.',
-      highlights: [
-        'Designed and shipped the complete website using Astro, Tailwind CSS, and content-driven components',
-        'Crafted consistent responsive layouts and accessible typography across desktop and mobile',
-        'Optimized asset delivery and performance for sub-1s page load metrics',
-      ],
-      tech: ['TypeScript', 'Astro', 'Tailwind CSS', 'Node', 'Vite'],
-    },
-    {
-      period: '2024',
-      title: 'Frontend Architect',
-      company: 'Nova Launch',
-      summary:
-        'Delivered a modular marketing site and interactive product showcase for a launch-ready SaaS brand.',
-      highlights: [
-        'Implemented a component-based design system with reusable cards, buttons, and hero sections',
-        'Built content-driven project pages, archive views, and client-side navigation enhancements',
-        'Added cross-browser polish and performance tuning with image optimization and lazy loading',
-      ],
-      tech: ['Astro', 'TypeScript', 'Tailwind CSS', 'Node', 'Vite'],
-    },
-    {
-      period: '2023',
-      title: 'UI Engineer',
-      company: 'Orbital Creative',
-      summary:
-        'Created an interactive product showcase with a clean visual system and accessible component library.',
-      highlights: [
-        'Built a flexible project card system for content updates without code changes',
-        'Improved brand consistency with typography, color, and motion guidelines',
-        'Added testing and quality checks for cross-device UI fidelity',
-      ],
-      tech: ['Astro', 'Tailwind CSS', 'JavaScript', 'Node', 'Vitest'],
-    },
-  ],
-  featuredProjects: [
-    {
-      title: 'Lumen Studio Website',
-      period: '2025',
-      summary: 'Built a polished portfolio experience with accessible UI, motion-led interactions, and reusable components.',
-      solution: 'Designed a modular component system with Astro and Tailwind CSS, ensuring consistent brand experience across all breakpoints.',
-      impact: 'Achieved sub-1s page load metrics and 95+ Lighthouse scores through optimized asset delivery and lazy loading strategies.',
-      image: 'astro-01.webp',
-      imageAlt: 'Lumen Studio website showcase',
-      techCategories: [
-        {
-          category: 'Frontend',
-          items: ['TypeScript', 'Astro', 'Tailwind CSS', 'Responsive Design'],
-        },
-        {
-          category: 'Performance',
-          items: ['Asset Optimization', 'Lazy Loading', 'Image CDN'],
-        },
-      ],
-    },
-    {
-      title: 'Nova Launch Marketing Platform',
-      period: '2024',
-      summary: 'Delivered a modular marketing site and interactive product showcase for a launch-ready SaaS brand.',
-      solution: 'Implemented a content-driven architecture with reusable card components and dynamic project pages, enabling non-technical content updates.',
-      impact: 'Reduced content update time by 80% through intuitive component-based structure; enabled marketing team independence.',
-      image: 'astro-02.jpeg',
-      imageAlt: 'Nova Launch platform interface',
-      techCategories: [
-        {
-          category: 'Frontend',
-          items: ['Astro', 'TypeScript', 'Tailwind CSS'],
-        },
-        {
-          category: 'Developer Experience',
-          items: ['Vite', 'ESLint', 'Automated Testing'],
-        },
-      ],
-    },
-  ],
+
+  experiences: [],
+
+  featuredProjects: [],
+
   projectArchivePage: {
-    title: 'All projects',
-    description: 'Project archive: dates, roles, and technologies across representative engagements.',
-    intro: 'A concise archive of engagements and representative work.',
+    title: 'Evidencias',
+    description:
+      'Evidencias y actividades desarrolladas durante la asignatura Bases de Datos 2.',
+    intro:
+      'En esta sección se irán agregando las evidencias del semestre.',
   },
+
   projectArchive: [
-    { date: '2025', project: 'Design system rollout', role: 'Frontend', techStack: 'Astro, CSS, Storybook' },
-    { date: '2024', project: 'Checkout reliability', role: 'Full-stack', techStack: 'TypeScript, Postgres, Redis' },
-    { date: '2024', project: 'Auth hardening', role: 'Backend', techStack: 'OAuth2, JWT, rate limits' },
-    { date: '2023', project: 'Analytics pipeline', role: 'Data', techStack: 'SQL, dbt, warehouse' },
-    { date: '2023', project: 'Mobile web refresh', role: 'Frontend', techStack: 'HTML, CSS, a11y audits' },
+    {
+      date: 'Semestre 2026-2',
+      project: 'SQL',
+      role: 'Evidencias',
+      techStack: 'SQL',
+    },
+    {
+      date: 'Semestre 2026-2',
+      project: 'PL/SQL Scripts',
+      role: 'Evidencias',
+      techStack: 'PL/SQL',
+    },
+    {
+      date: 'Semestre 2026-2',
+      project: 'NoSQL',
+      role: 'Evidencias',
+      techStack: 'NoSQL',
+    },
+    {
+      date: 'Semestre 2026-2',
+      project: 'Proyecto',
+      role: 'Evidencias',
+      techStack: 'Bases de Datos',
+    },
   ],
+
   contact: {
-    email: 'hello@example.com',
-    github: 'https://github.com/',
-    linkedin: 'https://www.linkedin.com/',
+    email: '',
+    github: 'https://github.com/dylanbmk/Dylan.github.io',
+    linkedin: '',
   },
 } as const;
 

@@ -3,8 +3,9 @@ import tailwindcss from '@tailwindcss/vite';
 import icon from 'astro-icon';
 
 export default defineConfig({
-  site: 'https://dylan.github.io',
+  site: 'https://dylanbmk.github.io',
   output: 'static',
+
   vite: {
     plugins: [tailwindcss()],
   },

@@ -82,11 +82,91 @@
   }
 
   .section-heading {
-    @apply mb-8 text-base font-bold uppercase tracking-tight text-slate lg:hidden;
+    @apply mb-6 flex items-center gap-3 text-sm font-bold uppercase tracking-[0.2em] text-accent;
+  }
+
+  .section-heading::after {
+    content: '';
+    @apply h-px flex-1;
+    background: color-mix(in srgb, var(--color-accent), transparent 70%);
   }
 
   .panel-card {
-    @apply rounded-md bg-white-soft p-6 transition duration-200;
+    @apply rounded-xl p-6 transition duration-300 sm:p-8;
+    background: color-mix(in srgb, var(--color-maintext), transparent 96%);
+    border: 1px solid color-mix(in srgb, var(--color-maintext), transparent 90%);
+  }
+
+  .panel-card:hover {
+    border-color: color-mix(in srgb, var(--color-accent), transparent 60%);
+  }
+
+  .chip {
+    @apply rounded-full px-3 py-1 font-mono text-xs text-accent;
+    background: color-mix(in srgb, var(--color-accent), transparent 90%);
+    border: 1px solid color-mix(in srgb, var(--color-accent), transparent 70%);
+  }
+
+  .status-badge {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider text-slate;
+    background: color-mix(in srgb, var(--color-maintext), transparent 90%);
+  }
+
+  .status-dot {
+    @apply h-2 w-2 rounded-full bg-accent;
+    animation: pulseDot 1.6s ease-in-out infinite;
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-semibold transition;
+    color: var(--color-background);
+  }
+
+  .btn-accent:hover {
+    @apply -translate-y-0.5 opacity-90;
+  }
+
+  .code-block {
+    @apply overflow-hidden rounded-lg;
+    background: color-mix(in srgb, var(--color-background), black 35%);
+    border: 1px solid color-mix(in srgb, var(--color-maintext), transparent 90%);
+  }
+
+  .code-block summary {
+    @apply flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-medium text-slate;
+  }
+
+  .code-block summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .code-block[open] summary {
+    border-bottom: 1px solid color-mix(in srgb, var(--color-maintext), transparent 90%);
+  }
+
+  .code-block pre {
+    @apply m-0 overflow-x-auto p-4 font-mono text-xs leading-relaxed text-slate-light;
+  }
+
+  .lang-badge {
+    @apply shrink-0 rounded px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent;
+    background: color-mix(in srgb, var(--color-accent), transparent 88%);
+  }
+
+  .scroll-stat {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+  }
+
+  .scroll-stat.reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
   }
 }
 

@@ -1,6 +1,10 @@
 ---
 import { navLinks } from '@data/nav';
 import SiteIntro from './SiteIntro.astro';
+
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
 ---
 
 <aside class="relative hidden shrink-0 lg:block lg:w-[42%]">
@@ -13,7 +17,7 @@ import SiteIntro from './SiteIntro.astro';
           {
             navLinks.map((link) => (
               <li>
-                <a href={`${import.meta.env.BASE_URL}${link.href}`} class="nav-link" data-section-link>
+                <a href={`${base}${link.href}`} class="nav-link" data-section-link>
                   <span>{link.label}</span>
                 </a>
               </li>

@@ -1,0 +1,84 @@
+---
+import { site } from '@data/site';
+import { Icon } from 'astro-icon/components';
+
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+---
+
+<section
+  id="evidencias"
+  class="mb-24 scroll-mt-24 lg:mb-32 lg:scroll-mt-8"
+  aria-labelledby="evidencias-heading"
+>
+  <h2 id="evidencias-heading" class="section-heading">Evidencias</h2>
+  <p class="body-copy mb-10 max-w-prose text-slate-light">
+    Trabajos de Bases de Datos 2 en Oracle 19c. Cada evidencia muestra lo que se construyó y
+    algunos fragmentos del código, no los scripts completos.
+  </p>
+
+  <div class="space-y-10">
+    {
+      site.evidencias.map((ev) => (
+        <article class="scroll-stat panel-card space-y-6" id={ev.id}>
+          <header class="space-y-2">
+            <p class="font-mono text-xs uppercase tracking-widest text-accent">{ev.fecha}</p>
+            <h3 class="font-heading text-2xl font-semibold leading-snug text-slate">{ev.titulo}</h3>
+            <p class="flex items-start gap-2 text-sm text-slate-light">
+              <Icon name="ph:users-three" class="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+              <span>{ev.equipo.join(' · ')}</span>
+            </p>
+          </header>
+
+          <p class="body-copy">{ev.resumen}</p>
+
+          <div>
+            <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-accent">Lo que se hizo</p>
+            <ul class="space-y-2">
+              {ev.aprendizajes.map((a) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-slate">
+                  <Icon name="ph:check-circle" class="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+                  <span>{a}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="space-y-3">
+            <p class="text-xs font-semibold uppercase tracking-wider text-accent">Fragmentos de código</p>
+            {ev.snippets.map((sn, i) => (
+              <details class="code-block" open={i === 0}>
+                <summary>
+                  <span class="flex items-center gap-2">
+                    <Icon name="ph:code" class="h-4 w-4 text-accent" aria-hidden="true" />
+                    {sn.titulo}
+                  </span>
+                  <span class="lang-badge">{sn.lenguaje}</span>
+                </summary>
+                <pre><code>{sn.codigo}</code></pre>
+              </details>
+            ))}
+          </div>
+
+          <ul class="flex flex-wrap gap-2 pt-2">
+            {ev.tecnologias.map((t) => (
+              <li class="chip">{t}</li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+
+  <p class="mt-12">
+    <a
+      href={`${base}projects`}
+      class="group inline-flex items-center gap-2 text-sm text-accent transition hover:text-slate-light"
+      data-astro-prefetch
+    >
+      Ver el resumen de todas las evidencias
+      <Icon name="ph:arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+    </a>
+  </p>
+</section>

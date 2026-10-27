@@ -1,0 +1,62 @@
+---
+import { site } from '@data/site';
+import { Icon } from 'astro-icon/components';
+
+const p = site.proyectoFinal;
+---
+
+<section
+  id="proyecto"
+  class="mb-24 scroll-mt-24 lg:mb-32 lg:scroll-mt-8"
+  aria-labelledby="proyecto-heading"
+>
+  <h2 id="proyecto-heading" class="section-heading">Proyecto final</h2>
+
+  <article class="scroll-stat panel-card space-y-6">
+    <header class="space-y-3">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="status-badge">
+          <span class="status-dot" aria-hidden="true"></span>
+          {p.estado}
+        </span>
+        <span class="chip">{p.rol}</span>
+      </div>
+      <h3 class="font-heading text-2xl font-semibold leading-snug text-slate">{p.titulo}</h3>
+      <p class="flex items-center gap-2 text-sm text-slate-light">
+        <Icon name="ph:buildings" class="h-4 w-4 text-accent" aria-hidden="true" />
+        {p.organizacion}
+      </p>
+      <p class="flex items-start gap-2 text-sm text-slate-light">
+        <Icon name="ph:users-three" class="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+        <span>{p.equipo.join(' · ')}</span>
+      </p>
+    </header>
+
+    <p class="body-copy">{p.resumen}</p>
+
+    <div>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-accent">Alcance</p>
+      <ul class="space-y-2">
+        {p.alcance.map((a) => (
+          <li class="flex gap-3 text-sm leading-relaxed text-slate">
+            <Icon name="ph:arrow-right" class="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+            <span>{a}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-3">
+      {p.stack.map((s) => (
+        <div class="rounded-md border border-[color-mix(in_srgb,var(--color-maintext),transparent_88%)] p-4">
+          <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-accent">{s.categoria}</p>
+          <ul class="space-y-1">
+            {s.items.map((it) => (
+              <li class="text-sm text-slate">{it}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </article>
+</section>

@@ -1,32 +1,31 @@
 ---
 import { site } from '@data/site';
 import { Icon } from 'astro-icon/components';
+
+const links = [
+  { href: site.contact.github, label: 'GitHub', icon: 'ph:github-logo', external: true },
+  { href: site.contact.linkedin, label: 'LinkedIn', icon: 'ph:linkedin-logo', external: true },
+  {
+    href: site.contact.email ? `mailto:${site.contact.email}` : '',
+    label: 'Correo',
+    icon: 'ph:envelope-simple',
+    external: false,
+  },
+].filter((l) => l.href);
 ---
 
 <div class="flex items-center gap-1">
-  <a
-    href={site.contact.github}
-    class="subtle-link inline-flex h-9 w-9 items-center justify-center rounded"
-    target="_blank"
-    rel="noreferrer"
-    aria-label="GitHub"
-  >
-    <Icon name="ph:github-logo" class="h-6 w-6" />
-  </a>
-  <a
-    href={site.contact.linkedin}
-    class="subtle-link inline-flex h-9 w-9 items-center justify-center rounded"
-    target="_blank"
-    rel="noreferrer"
-    aria-label="LinkedIn"
-  >
-    <Icon name="ph:linkedin-logo" class="h-6 w-6" />
-  </a>
-  <a
-    href={`mailto:${site.contact.email}`}
-    class="subtle-link inline-flex h-9 w-9 items-center justify-center rounded"
-    aria-label="Email"
-  >
-    <Icon name="ph:envelope-simple" class="h-6 w-6" />
-  </a>
+  {
+    links.map((l) => (
+      <a
+        href={l.href}
+        class="subtle-link inline-flex h-9 w-9 items-center justify-center rounded"
+        target={l.external ? '_blank' : undefined}
+        rel={l.external ? 'noreferrer' : undefined}
+        aria-label={l.label}
+      >
+        <Icon name={l.icon} class="h-6 w-6" />
+      </a>
+    ))
+  }
 </div>

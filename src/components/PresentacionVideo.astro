@@ -1,105 +1,42 @@
-<section class="video-section">
-  <div class="video-container">
+---
+import { Icon } from 'astro-icon/components';
 
-    <p class="eyebrow">PRESENTACIÓN</p>
+const videoId = 'MOnU2MRJGv0';
+const videoUrl = `https://youtube.com/shorts/${videoId}`;
+---
 
-    <h2>Conoce un poco sobre mí</h2>
+<section
+  id="presentacion"
+  class="mb-24 scroll-mt-24 lg:mb-32 lg:scroll-mt-8"
+  aria-labelledby="presentacion-heading"
+>
+  <h2 id="presentacion-heading" class="section-heading">Presentación</h2>
 
-    <p class="description">
-      En este video te cuento un poco sobre mí, mis intereses y lo que espero
-      aprender durante este semestre en Bases de Datos 2.
-    </p>
+  <div class="scroll-stat panel-card grid items-center gap-8 md:grid-cols-[1fr_14rem]">
+    <div class="space-y-4">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent">Video de presentación</p>
+      <h3 class="font-heading text-2xl font-semibold text-slate">Conoce un poco sobre mí</h3>
+      <p class="body-copy">
+        En este video te cuento un poco sobre mí, mis intereses y lo que espero aprender durante
+        este semestre en Bases de Datos 2.
+      </p>
+      <a href={videoUrl} target="_blank" rel="noopener noreferrer" class="btn-accent">
+        <Icon name="ph:youtube-logo" class="h-5 w-5" aria-hidden="true" />
+        Ver en YouTube
+      </a>
+    </div>
 
-    <a
-      href="https://youtube.com/shorts/MOnU2MRJGv0?feature=share"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="youtube-button"
-    >
-      <span class="youtube-icon">▶</span>
-      Ver mi video de presentación
-    </a>
-
+    <div class="mx-auto w-full max-w-[16rem] overflow-hidden rounded-xl border border-accent/40 shadow-lg">
+      <div class="relative aspect-[9/16]">
+        <iframe
+          class="absolute inset-0 h-full w-full"
+          src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+          title="Video de presentación de Dylan"
+          loading="lazy"
+          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
   </div>
 </section>
-
-<style>
-  .video-section {
-    width: 100%;
-    padding: 80px 20px;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .video-container {
-    width: 100%;
-    max-width: 900px;
-  }
-
-  .eyebrow {
-    margin-bottom: 18px;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #ffffff;
-  }
-
-  h2 {
-    margin: 0;
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 500;
-    color: #ffffff;
-  }
-
-  .description {
-    max-width: 700px;
-    margin: 25px auto 0;
-    font-size: 17px;
-    line-height: 1.7;
-    color: #bdbdbd;
-  }
-
-  .youtube-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 35px;
-    padding: 15px 26px;
-    border-radius: 10px;
-    background: #ff0000;
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 600;
-    transition: transform 0.25s ease, opacity 0.25s ease;
-  }
-
-  .youtube-button:hover {
-    transform: translateY(-3px);
-    opacity: 0.85;
-  }
-
-  .youtube-icon {
-    font-size: 17px;
-  }
-
-  @media (max-width: 600px) {
-    .video-section {
-      padding: 60px 20px;
-    }
-
-    h2 {
-      font-size: 34px;
-    }
-
-    .description {
-      font-size: 15px;
-    }
-
-    .youtube-button {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-</style>

@@ -8,6 +8,8 @@ interface Props {
 
 const { variant } = Astro.props;
 const isSidebar = variant === 'sidebar';
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const avatarSrc = `${base}${site.hero.avatar}`;
 ---
 
 {isSidebar ? (
@@ -18,7 +20,7 @@ const isSidebar = variant === 'sidebar';
     >
       <div class="w-28 h-28 md:w-32 md:h-32 overflow-hidden rounded-xl border border-accent/50 shadow-lg">
         <img
-          src={site.hero.avatarSrc}
+          src={avatarSrc}
           alt={site.hero.avatarAlt}
           class="h-full w-full object-cover"
           loading="eager"
@@ -31,7 +33,7 @@ const isSidebar = variant === 'sidebar';
 
     <div class="flex flex-col items-center text-center">
       <a
-        href={import.meta.env.BASE_URL}
+        href={base}
         class="text-5xl font-bold tracking-tight text-white transition"
       >
         {site.hero.name}
@@ -59,7 +61,7 @@ const isSidebar = variant === 'sidebar';
     <div class="relative mb-4">
       <div class="h-24 w-24 overflow-hidden rounded-xl border border-accent/50 shadow-lg">
         <img
-          src={site.hero.avatarSrc}
+          src={avatarSrc}
           alt={site.hero.avatarAlt}
           class="h-full w-full object-cover"
           loading="eager"

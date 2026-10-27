@@ -35,16 +35,16 @@ const homeHref = base;
         <thead class="text-slate">
           <tr>
             <th scope="col" class="whitespace-nowrap px-4 py-4 text-xs font-medium uppercase tracking-[0.25em]">
-              Year
+              Fecha
             </th>
             <th scope="col" class="px-4 py-4 text-xs font-medium uppercase tracking-[0.25em]">
-              Project
+              Evidencia
             </th>
             <th scope="col" class="px-4 py-4 text-xs font-medium uppercase tracking-[0.25em]">
-              Role
+              Tipo
             </th>
             <th scope="col" class="px-4 py-4 text-xs font-medium uppercase tracking-[0.25em]">
-              Tech stack
+              Tecnologías
             </th>
           </tr>
         </thead>
@@ -53,7 +53,13 @@ const homeHref = base;
             site.projectArchive.map((row) => (
               <tr>
                 <td class="whitespace-nowrap px-4 py-4 font-mono text-slate">{row.date}</td>
-                <td class="px-4 py-4 text-slate">{row.project}</td>
+                <td class="px-4 py-4 text-slate">
+                  {row.href ? (
+                    <a href={`${base}${row.href}`} class="subtle-link hover:underline">{row.project}</a>
+                  ) : (
+                    row.project
+                  )}
+                </td>
                 <td class="px-4 py-4 text-slate">{row.role}</td>
                 <td class="px-4 py-4 text-accent">{row.techStack}</td>
               </tr>

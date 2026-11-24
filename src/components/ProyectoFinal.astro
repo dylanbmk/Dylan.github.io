@@ -26,13 +26,26 @@ const p = site.proyectoFinal;
         <Icon name="ph:buildings" class="h-4 w-4 text-accent" aria-hidden="true" />
         {p.organizacion}
       </p>
-      <p class="flex items-start gap-2 text-sm text-slate-light">
-        <Icon name="ph:users-three" class="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-        <span>{p.equipo.join(' · ')}</span>
+      <p class="flex items-center gap-2 text-sm text-slate-light">
+        <Icon name="ph:calendar-blank" class="h-4 w-4 text-accent" aria-hidden="true" />
+        {p.periodo}
       </p>
+      <ul class="space-y-1">
+        {p.equipo.map((m) => (
+          <li class="flex items-start gap-2 text-sm text-slate-light">
+            <Icon name="ph:user" class="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+            <span>{m}</span>
+          </li>
+        ))}
+      </ul>
     </header>
 
     <p class="body-copy">{p.resumen}</p>
+
+    <div>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-accent">Mi rol en el proyecto</p>
+      <p class="body-copy">{p.rolDetalle}</p>
+    </div>
 
     <div>
       <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-accent">Alcance</p>
@@ -46,7 +59,7 @@ const p = site.proyectoFinal;
       </ul>
     </div>
 
-    <div class="grid gap-4 sm:grid-cols-3">
+    <div class="grid gap-4 sm:grid-cols-2">
       {p.stack.map((s) => (
         <div class="rounded-md border border-[color-mix(in_srgb,var(--color-maintext),transparent_88%)] p-4">
           <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-accent">{s.categoria}</p>
@@ -56,6 +69,21 @@ const p = site.proyectoFinal;
             ))}
           </ul>
         </div>
+      ))}
+    </div>
+
+    <div class="flex flex-wrap gap-x-6 gap-y-2">
+      {p.repositorios.map((r) => (
+        <a
+          href={r.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group inline-flex items-center gap-2 text-sm text-accent transition hover:text-slate-light"
+        >
+          <Icon name="ph:github-logo" class="h-4 w-4" aria-hidden="true" />
+          {r.nombre}
+          <Icon name="ph:arrow-up-right" class="h-4 w-4" aria-hidden="true" />
+        </a>
       ))}
     </div>
   </article>

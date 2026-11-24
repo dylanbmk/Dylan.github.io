@@ -14,8 +14,8 @@ const base = import.meta.env.BASE_URL.endsWith('/')
 >
   <h2 id="evidencias-heading" class="section-heading">Evidencias</h2>
   <p class="body-copy mb-10 max-w-prose text-slate-light">
-    Trabajos de Bases de Datos 2 en Oracle 19c. Cada evidencia muestra lo que se construyó y
-    algunos fragmentos del código, no los scripts completos.
+    Trabajos de Bases de Datos 2 en Oracle 19c y MongoDB. Cada evidencia muestra lo que se
+    construyó y algunos fragmentos del código, no los scripts completos.
   </p>
 
   <div class="space-y-10">
@@ -66,6 +66,19 @@ const base = import.meta.env.BASE_URL.endsWith('/')
               <li class="chip">{t}</li>
             ))}
           </ul>
+
+          {'enlace' in ev && (
+            <a
+              href={`${base}${ev.enlace}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group inline-flex items-center gap-2 text-sm text-accent transition hover:text-slate-light"
+            >
+              <Icon name="ph:file-pdf" class="h-4 w-4" aria-hidden="true" />
+              Ver el documento del taller
+              <Icon name="ph:arrow-up-right" class="h-4 w-4" aria-hidden="true" />
+            </a>
+          )}
         </article>
       ))
     }

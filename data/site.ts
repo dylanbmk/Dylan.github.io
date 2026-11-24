@@ -4,7 +4,7 @@ export const site = {
   meta: {
     title: 'Dylan Mancipe | E-Portafolio - Bases de Datos 2',
     description:
-      'E-portafolio académico de Dylan Arturo Mancipe Celis, estudiante de Ingeniería de Sistemas en la Universidad El Bosque: evidencias de Bases de Datos 2 en Oracle 19c, PL/SQL y proyecto final.',
+      'E-portafolio académico de Dylan Arturo Mancipe Celis, estudiante de Ingeniería de Sistemas en la Universidad El Bosque: evidencias de Bases de Datos 2 en Oracle 19c, PL/SQL, MongoDB y el proyecto final.',
   },
 
   hero: {
@@ -12,7 +12,7 @@ export const site = {
     fullName: 'Dylan Arturo Mancipe Celis',
     role: 'Estudiante de Ingeniería de Sistemas',
     tagline:
-      'E-portafolio académico de Bases de Datos 2: talleres en Oracle 19c, programación en PL/SQL y el proyecto final del semestre.',
+      'E-portafolio académico de Bases de Datos 2: talleres en Oracle 19c, PL/SQL y MongoDB, y el proyecto final del semestre.',
     contact: 'Universidad El Bosque · Bases de Datos 2 · 2026-2',
     avatar: 'foto-dylan.jpg',
     avatarAlt: 'Foto de Dylan Mancipe',
@@ -46,6 +46,122 @@ export const site = {
   },
 
   evidencias: [
+    {
+      id: 'taller-mql-mflix',
+      titulo: 'Taller MQL — Consultas, agregación e índices en MongoDB (sample_mflix)',
+      fecha: 'Noviembre 2026',
+      equipo: ['Dylan Arturo Mancipe Celis', 'Juan Diego López Galvis', 'Gabriela Poveda Garcia'],
+      resumen:
+        'Taller de MongoDB Query Language sobre el dataset sample_mflix (películas y comentarios): consultas find sobre arreglos y campos anidados, pipelines de agregación de varias etapas, operaciones de escritura, un índice diseñado con la regla ESR y medido con explain(), y el diseño del modelo de documentos para dos casos reales.',
+      aprendizajes: [
+        'Consultas find sobre arreglos y documentos anidados: $all + $size, $ne sobre arreglos, $exists/$in con $or, expresiones regulares sin distinguir mayúsculas y countDocuments con el mismo filtro.',
+        'Pipelines de agregación con $match, $unwind, $group, $project, $round, $slice y $sort: estadísticas por género, top de directores y películas por década (year - year % 10).',
+        'Top 10 de películas más comentadas con $lookup entre comments y movies, ordenando y limitando antes del cruce para que solo se busquen 10 documentos.',
+        'Colección nueva creada con $switch + $out, y luego updateMany ($set + $inc) y deleteMany, reportando matchedCount, modifiedCount y deletedCount.',
+        'Índice compuesto con la regla ESR (Equality, Sort, Range) y comparación de explain("executionStats") antes y después: COLLSCAN con ordenamiento en memoria vs. IXSCAN.',
+        'Diseño del modelo de documentos de una plataforma de domicilios (datos embebidos, referencias extendidas, patrón de atributos) y de una red IoT de calidad del aire en Bogotá (patrones bucket, computed y schema versioning), con documentos JSON de ejemplo.',
+      ],
+      tecnologias: ['MongoDB', 'MQL', 'Agregaciones', 'Índices', 'Modelado documental'],
+      enlace: 'docs/taller-mql-mflix.pdf',
+      snippets: [
+        {
+          titulo: 'Top 10 de películas más comentadas ($lookup)',
+          lenguaje: 'MQL',
+          codigo: `db.comments.aggregate([
+  { $group: { _id: "$movie_id", num_comentarios: { $sum: 1 } } },
+  { $sort: { num_comentarios: -1 } },
+  { $limit: 10 },   // limitar antes del $lookup: solo 10 cruces
+  { $lookup: { from: "movies", localField: "_id",
+               foreignField: "_id", as: "pelicula" } },
+  { $unwind: "$pelicula" },
+  { $project: { _id: 0, titulo: "$pelicula.title",
+                anio: "$pelicula.year", num_comentarios: 1 } }
+]);`,
+        },
+        {
+          titulo: 'Estadísticas por género (solo ratings numéricos)',
+          lenguaje: 'MQL',
+          codigo: `db.movies.aggregate([
+  { $match: { "imdb.rating": { $type: "number" } } },
+  { $unwind: "$genres" },
+  { $group: {
+      _id: "$genres",
+      num_peliculas: { $sum: 1 },
+      promedio: { $avg: "$imdb.rating" },
+      maximo: { $max: "$imdb.rating" }
+  } },
+  { $match: { num_peliculas: { $gt: 500 } } },
+  { $project: { num_peliculas: 1, maximo: 1,
+                promedio: { $round: ["$promedio", 2] } } },
+  { $sort: { promedio: -1 } }
+]);`,
+        },
+        {
+          titulo: 'Índice ESR: de COLLSCAN a IXSCAN',
+          lenguaje: 'MQL',
+          codigo: `// E: genres (igualdad)  S: imdb.rating (orden)  R: year (rango)
+db.movies.createIndex({ genres: 1, "imdb.rating": -1, year: 1 });
+
+db.movies.find(
+  { genres: "Drama", year: { $gte: 2000, $lte: 2010 },
+    "imdb.rating": { $gte: 8 } }
+).sort({ "imdb.rating": -1 }).limit(10)
+ .explain("executionStats");
+// comparar totalDocsExamined, executionTimeMillis y winningPlan`,
+        },
+      ],
+    },
+    {
+      id: 'taller-mongodb-airbnb',
+      titulo: 'Taller MongoDB — CRUD y agregación sobre sample_airbnb',
+      fecha: 'Noviembre 2026',
+      equipo: ['Dylan Arturo Mancipe Celis', 'Juan Diego López Galvis'],
+      resumen:
+        '30 ejercicios sobre la colección listingsAndReviews de sample_airbnb, ejecutados en VS Code con la extensión de MongoDB: inserciones, consultas con filtros, actualizaciones y pipelines de agregación para analizar precios, amenities, tipos de propiedad y reseñas.',
+      aprendizajes: [
+        'Inserciones con insertOne/insertMany: objetos address anidados, arreglos de amenities, precios Decimal128 y un _id duplicado para mostrar el error de unicidad.',
+        'Consultas con $gt, $lt, $and, $in, expresiones regulares, búsqueda en arreglos, $size, sort/limit y proyecciones sobre campos anidados (address.country, address.market).',
+        'Actualizaciones con $set, $push, $inc, $pull y un upsert que inserta el listing cuando no existe.',
+        'Agregaciones: precio promedio por país, top 5 de amenities con $unwind, listings por tipo de propiedad, conversión con $toInt y puntaje promedio de reseñas de los listings con 10 o más reseñas.',
+        'Rangos de precio con $bucket, últimas reseñas contadas por año con $year, capacidad promedio de huéspedes por tipo de propiedad y el diseño de un $lookup para unir los listings con una colección hosts.',
+      ],
+      tecnologias: ['MongoDB', 'MQL', 'CRUD', 'Agregaciones', 'VS Code'],
+      enlace: 'docs/taller-mongodb-crud-airbnb.pdf',
+      snippets: [
+        {
+          titulo: 'Top 5 de amenities del dataset',
+          lenguaje: 'MQL',
+          codigo: `db.listingsAndReviews.aggregate([
+  { $unwind: "$amenities" },
+  { $group: { _id: "$amenities", frecuencia: { $sum: 1 } } },
+  { $sort: { frecuencia: -1 } },
+  { $limit: 5 }
+]);`,
+        },
+        {
+          titulo: 'Listings por rango de precio ($bucket)',
+          lenguaje: 'MQL',
+          codigo: `db.listingsAndReviews.aggregate([
+  { $bucket: {
+      groupBy: "$price",
+      boundaries: [0, 101, 301, 1001],
+      default: "1000+",
+      output: { cantidad: { $sum: 1 } }
+  } }
+]);`,
+        },
+        {
+          titulo: 'Upsert: actualizar o insertar',
+          lenguaje: 'MQL',
+          codigo: `db.listingsAndReviews.updateOne(
+  { name: "Mansión de Prueba" },
+  { $set: { price: NumberDecimal("1500.00"),
+            "address.country": "United States" } },
+  { upsert: true }
+);`,
+        },
+      ],
+    },
     {
       id: 'taller-plsql',
       titulo: 'Taller PL/SQL — Inventario y ventas de una ferretería',
@@ -158,22 +274,38 @@ ALTER INDEX idx_monto_global REBUILD;`,
   ],
 
   proyectoFinal: {
-    titulo: 'Proyecto final — Sistema de gestión de pollos de engorde',
+    titulo: 'Proyecto final — Sistema de Gestión de Producción y Venta de Pollos de Engorde',
     organizacion: 'Los Pollos Hermanos (empresa ficticia del proyecto)',
-    rol: 'Gerente del proyecto',
-    estado: 'En desarrollo',
-    equipo: ['Dylan Arturo Mancipe Celis', 'Juan Diego López Galvis', 'Gabriela Poveda Garcia'],
+    rol: 'Gerente del proyecto · Experto del negocio',
+    estado: 'Terminado',
+    periodo: '22 de octubre – 19 de noviembre de 2026',
+    equipo: [
+      'Dylan Arturo Mancipe Celis — Gerente de proyecto / Experto del negocio / Desarrollador',
+      'Juan Diego López Galvis — Líder de base de datos e infraestructura / Desarrollador',
+      'Gabriela Poveda Garcia — Líder de frontend, calidad y documentación / Desarrolladora',
+    ],
     resumen:
-      'Sistema web para gestionar la producción y venta de pollos de engorde, con una base de datos relacional y una documental. Dylan lidera el proyecto por su conocimiento del negocio avícola.',
+      'Sistema web que centraliza la producción y la venta de una finca avícola de pollos de engorde, desde el ingreso de cada lote hasta el cobro de la venta, para conocer el costo real y la rentabilidad de cada lote. PostgreSQL concentra la lógica del negocio en procedimientos, funciones y triggers; MongoDB se usa en un único módulo, el seguimiento diario del crecimiento. El backend está en Java con Spring Boot y la interfaz en Angular.',
+    rolDetalle:
+      'Dylan fue designado gerente del proyecto por ser el integrante con mayor conocimiento del proceso productivo y comercial de los pollos de engorde: asignó las tareas y redistribuyó la carga del equipo, resolvió los desacuerdos entre áreas y validó que los supuestos, las reglas implementadas en la base de datos y el funcionamiento del sistema correspondieran a la operación real de una finca avícola. Además, decidió sobre las reglas del negocio avícola y sobre MongoDB.',
     alcance: [
-      'Gestión de la producción por etapas, incluida la alimentación de cada etapa.',
-      'Ventas con pasarela de pagos dentro del alcance.',
-      'Facturación electrónica (DIAN) fuera del alcance por ser un proyecto académico.',
+      'Ocho módulos: galpones y lotes; alimentación por etapas (preiniciación días 1 a 7, iniciación 8 a 21, engorde 22 a 35 y finalización desde el día 36); sanidad; gastos, incluido el costo del beneficio; personal; comercial (clientes, pedidos por lote y ventas); cartera y entregas; y seguimiento diario del crecimiento.',
+      'Mortalidad registrada a diario: la cantidad disponible se calcula con la mortalidad real y el sistema alerta cuando la mortalidad acumulada del lote supera el 5% esperado.',
+      'Costo real del lote con cinco componentes: pollitos de un día, alimento al costo promedio ponderado del bulto, vitaminas y medicamentos, beneficio (sacrificio, escaldado, desplume y evisceración) y demás gastos; de ahí salen el costo por ave vendida y la rentabilidad.',
+      'Reglas del negocio dentro de PostgreSQL con transacciones y excepciones: capacidad del galpón, alimento según la edad del lote, cargos autorizados, saldo y cartera vencida.',
+      'MongoDB solo para el seguimiento diario (peso promedio, temperatura, humedad, muestreos y novedades del galpón), porque su estructura cambia de un día a otro; ningún dato se guarda en las dos bases.',
+      'Pagos parciales y pago en línea con una pasarela en ambiente de pruebas, sin dinero real.',
+      'Fuera del alcance: facturación electrónica ante la DIAN, varias sedes, nómina, inventario de medicamentos, básculas o sensores automáticos y aplicación móvil.',
     ],
     stack: [
-      { categoria: 'Bases de datos', items: ['PostgreSQL (relacional)', 'MongoDB (documental)'] },
-      { categoria: 'Backend', items: ['Java Spring Boot', 'Servicio en VM Ubuntu'] },
-      { categoria: 'Frontend', items: ['Angular', 'Despliegue en Netlify'] },
+      { categoria: 'Bases de datos', items: ['PostgreSQL (PL/pgSQL)', 'MongoDB (seguimiento diario)'] },
+      { categoria: 'Backend', items: ['Java con Spring Boot', 'API REST'] },
+      { categoria: 'Frontend', items: ['Angular', 'Interfaz en español'] },
+      { categoria: 'Infraestructura', items: ['2 VM Ubuntu 26.04 (VirtualBox)', 'Backend y nginx en el equipo anfitrión'] },
+    ],
+    repositorios: [
+      { nombre: 'Backend (Spring Boot + SQL)', url: 'https://github.com/JuanchoLopezGalvis/pollos_hermanos_back' },
+      { nombre: 'Frontend (Angular)', url: 'https://github.com/JuanchoLopezGalvis/pollos_hermanos_front_dos' },
     ],
   },
 
@@ -201,18 +333,25 @@ ALTER INDEX idx_monto_global REBUILD;`,
       href: '#taller-plsql',
     },
     {
-      date: '2026-2',
+      date: 'Oct–Nov 2026',
       project: 'Proyecto final — Pollos de engorde',
       role: 'Gerente del proyecto',
       techStack: 'PostgreSQL · MongoDB · Spring Boot · Angular',
-      href: '#proyecto',
+      href: '#proyecto' as string,
     },
     {
-      date: '2026-2',
-      project: 'NoSQL',
-      role: 'Próximamente',
-      techStack: 'MongoDB',
-      href: '',
+      date: 'Nov 2026',
+      project: 'Taller MQL — sample_mflix',
+      role: 'Taller en grupo',
+      techStack: 'MongoDB · MQL',
+      href: '#taller-mql-mflix',
+    },
+    {
+      date: 'Nov 2026',
+      project: 'Taller MongoDB — CRUD y agregación (sample_airbnb)',
+      role: 'Taller en pareja',
+      techStack: 'MongoDB · MQL',
+      href: '#taller-mongodb-airbnb',
     },
   ],
 

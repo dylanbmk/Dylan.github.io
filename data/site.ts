@@ -241,6 +241,85 @@ EXCEPTION
       ],
     },
     {
+      id: 'taller-sql-banco-andino',
+      titulo: 'Taller SQL — Banco Andino: concurrencia, índices y SQL avanzado',
+      fecha: 'Septiembre 2026',
+      equipo: ['Dylan Arturo Mancipe Celis', 'Felipe Acosta'],
+      resumen:
+        'Taller integrador sobre el esquema simulado de un banco en Oracle 19c. Con dos conexiones a la vez se reprodujeron fallas reales de concurrencia, se midieron los planes de ejecución antes y después de cada índice y se resolvió un ticket de incidente: transferencias que no cuadraban y un informe lento.',
+      aprendizajes: [
+        'Actualización perdida con dos cajeros sobre la misma cuenta (quedaron 800.000 en vez de 500.000) y sus dos defensas: bloqueo pesimista con SELECT ... FOR UPDATE y bloqueo optimista con columna de versión.',
+        'Cola de compensación repartida entre dos procesos con FOR UPDATE SKIP LOCKED, bloqueo de tabla por llaves foráneas sin índice y un deadlock que se evita bloqueando las cuentas siempre en el mismo orden.',
+        'Índices con EXPLAIN PLAN: orden de columnas en índices compuestos (igualdad primero y rango al final, costo 39 vs. 25), índices sobre funciones, rangos de fecha en vez de TRUNC (costo 238 → 4), clustering factor e índice de cobertura (costo 378 → 94).',
+        'Costo de los índices al escribir (2,43 s con índices vs. 0,5 s sin ellos) para decidir qué índices dejar en la tabla de transferencias.',
+        'SQL avanzado: RANK, DENSE_RANK y ROW_NUMBER, RATIO_TO_REPORT, promedio móvil con ROWS BETWEEN, CTE recursiva vs. CONNECT BY, MERGE, FETCH FIRST ... WITH TIES, PIVOT y LISTAGG.',
+        'Reto integrador: diagnóstico de 4 defectos en la secuencia de una transferencia (saldo fijo calculado en memoria, un COMMIT por sentencia, estado APLICADA sin verificar y exceso de commits) y su corrección en una sola transacción.',
+      ],
+      tecnologias: ['Oracle 19c', 'SQL', 'Concurrencia', 'Índices', 'EXPLAIN PLAN', 'Funciones analíticas'],
+      enlace: 'docs/taller-sql-banco-andino.pdf',
+      snippets: [
+        {
+          titulo: 'Transferencia corregida: una sola transacción y bloqueo ordenado',
+          lenguaje: 'SQL',
+          codigo: `SELECT id_cuenta, saldo
+  FROM cuenta
+ WHERE id_cuenta IN (1001, 1002)
+ ORDER BY id_cuenta
+   FOR UPDATE;
+
+UPDATE cuenta
+   SET saldo = saldo - 300000
+ WHERE id_cuenta = 1001
+   AND saldo     >= 300000;
+
+UPDATE cuenta
+   SET saldo = saldo + 300000
+ WHERE id_cuenta = 1002;
+
+INSERT INTO movimiento (id_movimiento, id_cuenta, id_transferencia, fecha_mov, tipo, valor)
+VALUES (9500001, 1001, 950001, SYSDATE, 'DEBITO', 300000);
+
+INSERT INTO movimiento (id_movimiento, id_cuenta, id_transferencia, fecha_mov, tipo, valor)
+VALUES (9500002, 1002, 950001, SYSDATE, 'CREDITO', 300000);
+
+UPDATE transferencia
+   SET estado = 'APLICADA'
+ WHERE id_transferencia = 950001;
+
+COMMIT;`,
+        },
+        {
+          titulo: 'MERGE que no deja saldos negativos',
+          lenguaje: 'SQL',
+          codigo: `MERGE INTO cuenta c
+USING (SELECT id_cuenta, SUM(delta) AS delta
+         FROM ajuste_saldo
+        GROUP BY id_cuenta) a
+   ON (c.id_cuenta = a.id_cuenta)
+ WHEN MATCHED THEN
+   UPDATE SET c.saldo   = c.saldo + a.delta,
+              c.version = c.version + 1
+        WHERE c.saldo + a.delta >= 0;`,
+        },
+        {
+          titulo: 'Consulta optimizada: rango de fechas en vez de TO_CHAR',
+          lenguaje: 'SQL',
+          codigo: `SELECT s.ciudad,
+       COUNT(DISTINCT t.id_transferencia)  AS operaciones,
+       ROUND(SUM(t.valor))                 AS valor_total,
+       ROUND(AVG(t.valor))                 AS ticket
+  FROM transferencia t
+  JOIN cuenta        c ON c.id_cuenta   = t.cuenta_origen
+  JOIN sucursal      s ON s.id_sucursal = c.id_sucursal
+ WHERE t.fecha_transf >= DATE '2026-03-01'
+   AND t.fecha_transf <  DATE '2026-04-01'
+   AND t.estado = 'APLICADA'
+ GROUP BY s.ciudad
+ ORDER BY valor_total DESC;`,
+        },
+      ],
+    },
+    {
       id: 'indices-particiones',
       titulo: 'Laboratorio — Índices locales vs. globales en tablas particionadas',
       fecha: 'Septiembre 2026',
@@ -318,6 +397,13 @@ ALTER INDEX idx_monto_global REBUILD;`,
   },
 
   projectArchive: [
+    {
+      date: 'Sep 2026',
+      project: 'Taller SQL — Banco Andino',
+      role: 'Taller en pareja',
+      techStack: 'Oracle 19c · SQL',
+      href: '#taller-sql-banco-andino',
+    },
     {
       date: 'Sep 2026',
       project: 'Índices locales vs. globales en tablas particionadas',
